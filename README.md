@@ -1,5 +1,4 @@
 # projet_digitale
-déploiement de modèle d'apprentissage via une API (flask)
 
 ## Yassine Abderrahmani 
 
@@ -24,7 +23,4 @@ But : Mise en place de modèle d'apprentissage (ML, DL...) et déploiement via A
 Se rendre dans le dossier "Tous_les_services" : `cd \Tous_les_services` puis `python main.py`.  
 Ensuite via un navigateur : `http://127.0.0.1:5000` Pour le page principale.
 
-     
-    
-    
-    
+
