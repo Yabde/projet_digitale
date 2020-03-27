@@ -25,9 +25,16 @@ Goal : Create a ML, Dl model and deploye it trough an API (flask)
     
 ---
  
-- **Lancement des Programmes** 
-    
-Se rendre dans le dossier "Tous_les_services" : `cd \Tous_les_services` puis `python main.py`.  
-Ensuite via un navigateur : `http://127.0.0.1:5000` Pour le page principale.
+- **Starting Apps** 
+    - ##### First App
+      Go to "Tous_les_services" : `cd \Tous_les_services` Then `python main.py`.  
+      And through your Browser : `http://127.0.0.1:5000` For the main Page.
+    - ##### Final App 
+      Open **one Terminal.**  
+      Go to : `cd \Final Work\flask-react\backend` Then `python app.py` To start the Flask server.  
 
+      Then open a **second Terminal.**  
+      Go to : `cd \Final Work\flask-react\front-react` Then `npm start` To start the react app.
+      
+      And Finally through your Browser : `http://127.0.0.1:3000` For the main Page.
 
