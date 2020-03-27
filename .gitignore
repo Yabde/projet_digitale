@@ -1,2 +1,5 @@
 .vscode/settings.json
 __pycache__
+poubelle.ipynb
+.vscode
+.idea

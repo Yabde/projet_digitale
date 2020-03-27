@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     // Permet de Loader et afficher un preview de notre image : cf developper.mozilla
     //Existe aussi une version avec JQuery ...
     function previewFile() {

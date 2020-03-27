@@ -11,7 +11,8 @@ from keras.preprocessing import image
 from sympy.printing.tests.test_tensorflow import tf
 from werkzeug.utils import secure_filename
 
-deepl = Blueprint("deepl", __name__, static_folder="static", template_folder="templates")
+deepl = Blueprint("deepl", __name__, static_folder="static",
+                  template_folder="templates")
 
 MODEL_PATH = ".\\Deep_Learn\\my_model.h5"
 
@@ -28,11 +29,15 @@ else:
 # On sauvegarde au format H5 : le plus simple pour Keras, pas besoin de recompiler
 # Inclus : Les poids, l'architecture, détails de la compilation (loss, metrics), optimisé.
 
+
 @deepl.route('/', methods=['GET'])
 def index():
     return render_template('construction_temp.html')
 
-graph = tf.get_default_graph()  # Astuce : Utilisée pour le préprocessing de l'image sinon Tensorflow renvoie une erreur... problème avec certaines Versions !
+
+# Astuce : Utilisée pour le préprocessing de l'image sinon Tensorflow renvoie une erreur... problème avec certaines Versions !
+graph = tf.get_default_graph()
+
 
 @deepl.route('/prediction', methods=['GET', 'POST'])
 def upload():
@@ -42,19 +47,25 @@ def upload():
 
         # On sauvegarde l'image dans un dossier ./uploads  pour pouvoir la réutiliser avec notre modèle
         basepath = os.path.dirname(__file__)
-        file_path = os.path.join(basepath, 'uploads', secure_filename(f.filename))
+        file_path = os.path.join(
+            basepath, 'uploads', secure_filename(f.filename))
         f.save(file_path)
 
         # Astuces : utiliser graph.as_default() quand on fait une Inférance (prédiction) pour contrer le problème entre TensorFlow et les Sessions (multi Thread...si plusieurs sessions)
         global graph
         with graph.as_default():
             # Quelques traitement d'images par défault pour ResNet
-            img = image.load_img(file_path, target_size=(224, 224))  # Redimensionne l'image loader
-            x = image.img_to_array(img)                     # Rajoute les 'channels' : x.shape = (224, 224, 3) Pour RGB et (224, 224, 1) Pour image grise
-            x = np.expand_dims(x, axis=0)                   # Ici on étend la Dimension car : De base quand on load une image -> on obtient son Shape (Size1, Size2, channels)
-                                                            # Or pour Keras : On veut des Batches d'images -> 1ère Dim = numéro du sample -> (samples, size1, size2, channels)
-            x = preprocess_input(x, mode='caffe')           # Pour rendre Adequate notre image selon le model utilisé, 'caffe' par défault pour ResNet -> Non normalisé mais Centrée
-            preds = model.predict(x)                        # Pour faire la prédiction
+            img = image.load_img(file_path, target_size=(
+                224, 224))  # Redimensionne l'image loader
+            # Rajoute les 'channels' : x.shape = (224, 224, 3) Pour RGB et (224, 224, 1) Pour image grise
+            x = image.img_to_array(img)
+            # Ici on étend la Dimension car : De base quand on load une image -> on obtient son Shape (Size1, Size2, channels)
+            x = np.expand_dims(x, axis=0)
+            # Or pour Keras : On veut des Batches d'images -> 1ère Dim = numéro du sample -> (samples, size1, size2, channels)
+            # Pour rendre Adequate notre image selon le model utilisé, 'caffe' par défault pour ResNet -> Non normalisé mais Centrée
+            x = preprocess_input(x, mode='caffe')
+            # Pour faire la prédiction
+            preds = model.predict(x)
 
         # Récupération de l'information souhaitée
         pred_class = decode_predictions(preds, top=5)  # Decode ImageNet
