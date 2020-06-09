@@ -1,8 +1,4 @@
-# Digital.e Project - Centrale Marseille
-
-## Yassine Abderrahmani & Abid Salah-eddine
-
-Goal : Create a ML, Dl model and deploye it trough an API (flask)
+Goal : Labelisation tools with ReactJs and Flask. Using Yolo to make some pre-label box and then having the choice to change them or add new ones.
 
 ### Remarks :
 
